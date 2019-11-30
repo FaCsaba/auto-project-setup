@@ -1,0 +1,1 @@
+This bash script simply allows you to create a project folder
