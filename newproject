@@ -1,0 +1,33 @@
+#!/bin/bash
+#This software was made by Fazekas Csaba <csab.faz.2@gmail.com>
+
+
+
+function gitting () {
+    #config---
+    gitname="FaCsaba" #your git username
+    projectfolderlocation="$HOME/projects" #where your projects folder is located. DONT put a "/" after it
+    editor="code" #the editor of your choice
+    #---------
+
+    cd $projectfolderlocation
+    mkdir $1
+    cd $projectfolderlocation/$1
+    echo "succesfully created $projectfolderlocation/$1 directory"
+    touch README.md
+    git init
+    git add .
+    git commit -m "initial commit"
+    curl -u ''$gitname'' https://api.github.com/user/repos -d '{"name":"'$1'"}'
+    git remote add origin https://github.com/$gitname/$1.git
+    git push -u origin master
+    $editor $projectfolderlocation/$1/
+}
+
+if [ -z $1 ] ; then
+    echo "Please add a name to your project:"
+    read  
+    gitting $REPLY
+else
+    gitting $1
+fi
